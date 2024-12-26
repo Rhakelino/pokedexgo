@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Pokemon1';
+    src: url('/fonts/pokemon1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Pokemon2';
+    src: url('/fonts/pokemon2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
