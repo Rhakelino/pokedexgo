@@ -37,7 +37,7 @@ function DetailPokemon() {
                     <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
                         alt={pokemon.name}
-                        className="mx-20 w-52 p-10"
+                        className="mx-20 md:w-80 p-10"
                     />
                 </div>
                 <h1 className="text-2xl font-pokemon2 capitalize">{pokemon.name}</h1>
@@ -62,19 +62,3 @@ function DetailPokemon() {
 }
 
 export default DetailPokemon;
-{/* <div className="flex flex-col items-center justify-center min-h-screen">
-            <img
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-                alt={pokemon.name}
-                className="mb-5"
-            />
-            <h1 className="text-3xl font-bold capitalize">{pokemon.name}</h1>
-            <span className="opacity-80 text-gray-500">#{String(pokemon.id).padStart(3, "0")}</span>
-            <div className="flex gap-3 mt-3">
-                {pokemon.types.map((type, i) => (
-                    <p key={i} className="py-1 px-2 rounded-full bg-blue-500 text-white font-medium text-xs">
-                        {type.type.name}
-                    </p>
-                ))}
-            </div>
-        </div> */}
