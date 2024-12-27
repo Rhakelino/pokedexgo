@@ -10,6 +10,9 @@ export default {
         pokemon1: ['"Pokemon1"', 'sans-serif'],
         pokemon2: ['"Pokemon2"', 'sans-serif'],
       },
+      letterSpacing: {
+        'super-wide': '0.2em'
+      }
     },
   },
   plugins: [],
