@@ -1,77 +1,75 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
-const typeColors = {
-    grass: "bg-green-400",
-    poison: "bg-purple-400",
-    fire: "bg-red-400",
-    water: "bg-blue-400",
-    bug: "bg-green-300",
-    normal: "bg-gray-300",
-    electric: "bg-yellow-300",
-    ground: "bg-yellow-600",
-    fairy: "bg-pink-300",
-    fighting: "bg-red-600",
-    psychic: "bg-pink-500",
-    rock: "bg-gray-500",
-    ghost: "bg-indigo-500",
-    ice: "bg-blue-200",
-    dragon: "bg-indigo-700",
-    dark: "bg-gray-700",
-    steel: "bg-gray-400",
-    flying: "bg-blue-100",
+export const getBackgroundColor = (type) => {
+    const colors = {
+        grass: "bg-green-400",
+        poison: "bg-purple-400",
+        fire: "bg-red-400",
+        water: "bg-blue-400",
+        bug: "bg-green-300",
+        normal: "bg-gray-300",
+        electric: "bg-yellow-300",
+        ground: "bg-yellow-600",
+        fairy: "bg-pink-300",
+        fighting: "bg-red-600",
+        psychic: "bg-pink-500",
+        rock: "bg-gray-500",
+        ghost: "bg-indigo-500",
+        ice: "bg-blue-200",
+        dragon: "bg-indigo-700",
+        dark: "bg-gray-700",
+        steel: "bg-gray-400",
+        flying: "bg-blue-100",
+    };
+    return colors[type] || "bg-gray-200"; // Default color
 };
 
-function getBackgroundColor(type) {
-    return typeColors[type] || "bg-gray-200"; // Default color
-}
-
-
 function App() {
-
-    const [pokemon, setPokemon] = useState([])
+    const [pokemon, setPokemon] = useState([]);
+    const pokemonCache = useRef(null); // Cache data Pokémon
 
     useEffect(() => {
         const fetchApi = async () => {
             try {
                 const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=50");
-                const data = await response.json()
+                const data = await response.json();
                 const detailPokemon = await Promise.all(
                     data.results.map(async (pokemon) => {
-                        const res = await fetch(pokemon.url)
-                        return await res.json()
+                        const res = await fetch(pokemon.url);
+                        return await res.json();
                     })
-                )
-                setPokemon(detailPokemon)
-                console.log(detailPokemon)
+                );
+                pokemonCache.current = detailPokemon; // Simpan data ke cache
+                setPokemon(detailPokemon);
             } catch {
-                console.error("Error fecthing")
+                console.error("Error fetching data");
             }
+        };
+
+        // Jika data ada di cache, gunakan cache, jika tidak, fetch API
+        if (pokemonCache.current) {
+            setPokemon(pokemonCache.current);
+        } else {
+            fetchApi();
         }
-        fetchApi()
-    }, [])
+    }, []);
 
     return (
         <div className="flex flex-col">
-            {/* navbar */}
+            {/* Navbar */}
             <div className="flex">
                 <div className="flex shadow-md w-full p-5 bg-slate-200">
-                    <h1 className='font-pokemon2 text-2xl'>PokeDexGo</h1>
+                    <h1 className="font-pokemon2 text-2xl">PokeDexGo</h1>
                 </div>
             </div>
-            {/* end navbar */}
+            {/* End Navbar */}
 
-            {/* Search Bar */}
-            {/* <div className="flex justify-between  m-5">
-        <h1 className='hidden md:block'>AHAHAH</h1>
-        <input type="text" className='bg-neutral-200 w-full md:w-1/4 py-2 px-2 rounded-lg' />
-      </div> */}
-            {/* End Search Bar */}
-
-            {/* card */}
+            {/* Card */}
             {pokemon.length === 0 ? (
-                <div className="flex justify-center items-center min-h-screen">
-                    <img src="./images/loading.gif" alt="" />
+                <div className="flex flex-col justify-center items-center min-h-screen">
+                    <p className="text-3xl font-bold font-pokemon1">Loading...</p>
+                    <img src="./images/loading.gif" alt="Loading..." />
                 </div>
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 m-5">
@@ -99,15 +97,12 @@ function App() {
                                 )}
                             </div>
                         </Link>
-                    ))
-                    }
+                    ))}
                 </div>
             )}
-
-
-            {/* end card */}
+            {/* End Card */}
         </div>
-    )
+    );
 }
 
-export default App
+export default App;
