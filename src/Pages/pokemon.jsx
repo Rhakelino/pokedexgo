@@ -47,7 +47,7 @@ function DetailPokemon() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-yellow-300">
             <div className="flex flex-col items-center bg-white rounded-md m-5 md:mx-40">
-                <div className="flex justify-end border w-full px-5 pt-2 -mb-9">
+                <div className="flex justify-end w-full px-5 pt-2 ">
                     {/* Tombol Download */}
                     <button
                         onClick={handleDownload}
